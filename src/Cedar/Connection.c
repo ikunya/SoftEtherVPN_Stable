@@ -1709,7 +1709,7 @@ void ConnectionReceive(CONNECTION *c, CANCEL *c1, CANCEL *c2)
 				num = LIST_NUM(tcp->TcpSockList);
 				if (num >= s->MaxConnection)
 				{
-					TCPSOCK *ts;
+					TCPSOCK *ts = NULL;
 					for (i = 0;i < num;i++)
 					{
 						ts = LIST_DATA(tcp->TcpSockList, i);
@@ -1722,11 +1722,14 @@ void ConnectionReceive(CONNECTION *c, CANCEL *c1, CANCEL *c2)
 							c2s++;
 						}
 					}
-					if (s2c == 0 || c2s == 0)
+					if (ts != NULL)
 					{
-						// Disconnect the last socket
-						Disconnect(ts->Sock);
-						Debug("Disconnect (s2c=%u, c2s=%u)\n", s2c, c2s);
+						if (s2c == 0 || c2s == 0)
+						{
+							// Disconnect the last socket
+							Disconnect(ts->Sock);
+							Debug("Disconnect (s2c=%u, c2s=%u)\n", s2c, c2s);
+						}
 					}
 				}
 			}
@@ -3568,6 +3571,7 @@ CONNECTION *NewServerConnection(CEDAR *cedar, SOCK *s, THREAD *t)
 	{
 		AddRef(c->FirstSock->ref);
 		Copy(&c->ClientIp, &s->RemoteIP, sizeof(IP));
+		c->ClientPort = s->RemotePort;
 		StrCpy(c->ClientHostname, sizeof(c->ClientHostname), s->RemoteHostname);
 	}
 	c->Tcp = ZeroMalloc(sizeof(TCP));

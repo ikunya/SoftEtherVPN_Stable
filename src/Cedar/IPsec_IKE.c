@@ -159,6 +159,55 @@ void ProcIKEPacketRecv(IKE_SERVER *ike, UDPPACKET *p)
 	}
 }
 
+IKE_INFOMSG_QUOTA_ENTRY *IkeInfoMsgQuotaGetEntry(IKE_SERVER *ike, IP *client_ip)
+{
+	UINT i;
+	IKE_INFOMSG_QUOTA_ENTRY *new_entry = NULL;
+	if (ike == NULL || client_ip == NULL)
+	{
+		return NULL;
+	}
+
+	for (i = 0;i < LIST_NUM(ike->InfoMsgQuotaList);i++)
+	{
+		IKE_INFOMSG_QUOTA_ENTRY *q = LIST_DATA(ike->InfoMsgQuotaList, i);
+
+		if (CmpIpAddr(&q->ClientIp, client_ip) == 0)
+		{
+			return q;
+		}
+	}
+
+	if (LIST_NUM(ike->InfoMsgQuotaList) >= IKE_QUOTA_MAX_INFOMSG_ENTRY_COUNT)
+	{
+		return NULL;
+	}
+
+	new_entry = ZeroMalloc(sizeof(IKE_INFOMSG_QUOTA_ENTRY));
+	CopyIP(&new_entry->ClientIp, client_ip);
+	Add(ike->InfoMsgQuotaList, new_entry);
+
+	return new_entry;
+}
+
+void IkeInfoMsgQuotaDeleteAll(IKE_SERVER *ike)
+{
+	UINT i;
+	if (ike == NULL)
+	{
+		return;
+	}
+
+	for (i = 0;i < LIST_NUM(ike->InfoMsgQuotaList);i++)
+	{
+		IKE_INFOMSG_QUOTA_ENTRY *q = LIST_DATA(ike->InfoMsgQuotaList, i);
+
+		Free(q);
+	}
+
+	DeleteAll(ike->InfoMsgQuotaList);
+}
+
 // Send a packet via IPsec
 void IPsecSendPacketByIPsecSa(IKE_SERVER *ike, IPSECSA *sa, UCHAR *data, UINT data_size, UCHAR protocol_id)
 {
@@ -1337,9 +1386,24 @@ void SendInformationalExchangePacketEx(IKE_SERVER *ike, IKE_CLIENT *c, IKE_PACKE
 	BUF *tmp_buf;
 	UCHAR hash[IKE_MAX_HASH_SIZE];
 	IKE_CRYPTO_PARAM cp;
+	IKE_INFOMSG_QUOTA_ENTRY *quota_entry;
 	bool plain = false;
 	// Validate arguments
 	if (ike == NULL || c == NULL || payload == NULL)
+	{
+		IkeFreePayload(payload);
+		return;
+	}
+
+	quota_entry = IkeInfoMsgQuotaGetEntry(ike, &c->ClientIP);
+	if (quota_entry == NULL)
+	{
+		IkeFreePayload(payload);
+		return;
+	}
+
+	quota_entry->Count++;
+	if (quota_entry->Count >= IKE_QUOTA_MAX_INFOMSG_SEND_PER_IP_PER_SEC)
 	{
 		IkeFreePayload(payload);
 		return;
@@ -1420,13 +1484,13 @@ void SendInformationalExchangePacketEx(IKE_SERVER *ike, IKE_CLIENT *c, IKE_PACKE
 
 	IkeSendUdpPacket(ike, IKE_UDP_TYPE_ISAKMP, &c->ServerIP, c->ServerPort,
 		&c->ClientIP, c->ClientPort,
-		ps_buf->Buf, ps_buf->Size);
+		Clone(ps_buf->Buf, ps_buf->Size), ps_buf->Size);
 
 #ifdef	RAW_DEBUG
 	IkeDebugUdpSendRawPacket(ps);
 #endif	// RAW_DEBUG
 
-	Free(ps_buf);
+	FreeBuf(ps_buf);
 
 	IkeFree(ps);
 }
@@ -4058,9 +4122,9 @@ void IPsecSaSendPacket(IKE_SERVER *ike, IPSECSA *sa, IKE_PACKET *p)
 
 	IkeSendUdpPacket(ike, IKE_UDP_TYPE_ISAKMP, &sa->IkeClient->ServerIP, sa->IkeClient->ServerPort,
 		&sa->IkeClient->ClientIP, sa->IkeClient->ClientPort,
-		buf->Buf, buf->Size);
+		Clone(buf->Buf, buf->Size), buf->Size);
 
-	Free(buf);
+	FreeBuf(buf);
 }
 
 // Send a packet using the IKE SA
@@ -4118,9 +4182,9 @@ void IkeSaSendPacket(IKE_SERVER *ike, IKE_SA *sa, IKE_PACKET *p)
 
 	IkeSendUdpPacket(ike, IKE_UDP_TYPE_ISAKMP, &sa->IkeClient->ServerIP, sa->IkeClient->ServerPort,
 		&sa->IkeClient->ClientIP, sa->IkeClient->ClientPort,
-		buf->Buf, buf->Size);
+		Clone(buf->Buf, buf->Size), buf->Size);
 
-	Free(buf);
+	FreeBuf(buf);
 }
 
 // Send an UDP packet
@@ -5940,6 +6004,15 @@ void FreeIKEServer(IKE_SERVER *ike)
 
 	FreeIkeEngine(ike->Engine);
 
+	for (i = 0;i < LIST_NUM(ike->InfoMsgQuotaList);i++)
+	{
+		IKE_INFOMSG_QUOTA_ENTRY *q = LIST_DATA(ike->InfoMsgQuotaList, i);
+
+		Free(q);
+	}
+
+	ReleaseList(ike->InfoMsgQuotaList);
+
 	Debug("FreeThreadList()...\n");
 	FreeThreadList(ike->ThreadList);
 	Debug("FreeThreadList() Done.\n");
@@ -5973,6 +6046,8 @@ IKE_SERVER *NewIKEServer(CEDAR *cedar, IPSEC_SERVER *ipsec)
 	ike->IPsecSaList = NewList(CmpIPsecSa);
 
 	ike->ClientList = NewList(CmpIkeClient);
+
+	ike->InfoMsgQuotaList = NewList(NULL);
 
 	ike->Engine = NewIkeEngine();
 
