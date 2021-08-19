@@ -1,5 +1,5 @@
-softether-vpn (0:4.04.9412-rtm) unstable; urgency=low
+softether-vpn (4.38.9760-rtm) focal; urgency=low
 
-  * Testing debianization
+  * See: http://www.softether.org/5-download/history
 
- -- Dmitry Orlov <me@mosquito.su>  Tue, 4 Feb 2014 20:24:43 +0000
+ -- AWASHIRO Ikuya <ikuya@zuikaku>  Thu, 19 Aug 2021 15:26:02 +0900

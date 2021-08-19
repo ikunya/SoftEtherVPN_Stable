@@ -1,0 +1,31 @@
+[Unit]
+Description=SoftEther VPN Server
+After=network.target auditd.service
+ConditionPathExists=!/opt/vpnserver/do_not_run
+
+[Service]
+Type=forking
+EnvironmentFile=-/opt/vpnserver
+ExecStart=/opt/vpnserver/vpnserver start
+ExecStop=/opt/vpnserver/vpnserver stop
+KillMode=process
+Restart=on-failure
+#If you want to know the tap device name, you may run "ip tuntap"
+#ExecStartPost=/bin/sleep 5
+#ExecStartPost=/sbin/ifup vpn_vpn
+#ExecStop=/sbin/ifdown vpn_vpn
+
+# Hardening
+PrivateTmp=yes
+ProtectHome=yes
+ProtectSystem=full
+ReadOnlyDirectories=/
+ReadWriteDirectories=-/opt/vpnserver
+#uncomment below and comment above if you want to run ifup/ifdown.
+#ReadWriteDirectories=-/opt/vpnclient -/run/network
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE CAP_NET_BROADCAST CAP_NET_RAW CAP_SYS_NICE CAP_SYS_ADMIN CAP_SETUID
+
+[Install]
+WantedBy=multi-user.target
+
+
