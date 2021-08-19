@@ -1,5 +1,18 @@
-softether-vpn (0:4.04.9412-rtm) unstable; urgency=low
+softether-vpn-stable (4.34.9745-rtm) focal; urgency=medium
 
-  * Testing debianization
+  * based on softether-vpn due to a compatibility.
 
- -- Dmitry Orlov <me@mosquito.su>  Tue, 4 Feb 2014 20:24:43 +0000
+ -- AWASHIRO Ikuya <ikuya@fruitsbasket.info>  Wed, 28 Oct 2020 17:21:27 +0900
+
+softether-vpn (5.01.9674+git20200806+8181039+dfsg-2) unstable; urgency=medium
+
+  [ Chris Lamb ]
+  * Make the build reproducible (Closes: #972496).
+
+ -- Andrej Shadura <andrewsh@debian.org>  Mon, 19 Oct 2020 14:14:55 +0200
+
+softether-vpn (5.01.9674+git20200806+8181039+dfsg-1) unstable; urgency=low
+
+  * Initial upload (Closes: #968447).
+
+ -- Andrej Shadura <andrewsh@debian.org>  Sat, 15 Aug 2020 22:54:32 +0200
