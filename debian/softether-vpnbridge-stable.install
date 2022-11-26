@@ -1,0 +1,3 @@
+#! /usr/bin/dh-exec
+bin/vpnbridge/vpnbridge usr/bin/
+usr/vpnbridge opt/

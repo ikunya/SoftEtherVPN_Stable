@@ -1,0 +1,3 @@
+#! /usr/bin/dh-exec
+bin/vpncmd/vpncmd usr/bin/
+usr/vpncmd opt/

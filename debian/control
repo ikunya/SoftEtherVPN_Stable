@@ -15,7 +15,6 @@ Homepage: https://www.softether.org/
 Package: softether-vpnserver-stable
 Architecture: any
 Depends:
- softether-common-stable,
  softether-vpncmd-stable,
  ${misc:Depends},
  ${shlibs:Depends}
@@ -41,7 +40,6 @@ Description: multiprotocol VPN program (server daemon)
 Package: softether-vpnclient-stable
 Architecture: any
 Depends:
- softether-common-stable,
  softether-vpncmd-stable,
  ${misc:Depends},
  ${shlibs:Depends}
@@ -67,7 +65,6 @@ Description: multiprotocol VPN program (client)
 Package: softether-vpncmd-stable
 Architecture: any
 Depends:
- softether-common-stable,
  ${misc:Depends},
  ${shlibs:Depends}
 Pre-Depends: ${misc:Pre-Depends}
@@ -92,7 +89,6 @@ Description: multiprotocol VPN program (command-line tools)
 Package: softether-vpnbridge-stable
 Architecture: any
 Depends:
- softether-common-stable,
  softether-vpncmd-stable,
  ${misc:Depends},
  ${shlibs:Depends}
@@ -113,26 +109,3 @@ Description: multiprotocol VPN program (bridge daemon)
   * Web GUI
  .
  This package ships the VPN bridge daemon.
-
-Package: softether-common-stable
-Architecture: any
-Depends:
- ${misc:Depends},
- ${shlibs:Depends}
-Section: net
-Description: multiprotocol VPN program (common files)
- SoftEther is an open-source cross-platform multi-protocol VPN program.
- .
- SoftEther supports:
- .
-  * SSL-VPN, OpenVPN, IPsec, L2TP, MS-SSTP, L2TPv3, EtherIP
-  * VPN over ICMP and VPN over DNS
-  * Ethernet-bridging (L2) and IP-routing (L3) over VPN
-  * Embedded dynamic DNS and NAT traversal
-  * AES 256-bit and RSA 4096-bit encryption
-  * RADIUS and NT domain user authentication
-  * X.509 client certificates
-  * Packet logging
-  * Web GUI
- .
- This package ships the common files used by other SoftEther packages.

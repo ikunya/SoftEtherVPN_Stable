@@ -10,6 +10,11 @@ ExecStart=/opt/vpnserver/vpnserver start
 ExecStop=/opt/vpnserver/vpnserver stop
 KillMode=process
 Restart=on-failure
+#If you want to know the tap device name, you may run "ip tuntap"
+#ExecStartPost=/bin/sleep 5
+#ExecStartPost=/sbin/ip addr add 192.168.128.2/24 dev vpn_softether
+#ExecStartPost=/sbin/ip link set mtu 1280 dev vpn_softether
+#ExecStop=/sbin/ip addr del 192.168.128.2/24 dev vpn_softether
 
 # Hardening
 PrivateTmp=yes
