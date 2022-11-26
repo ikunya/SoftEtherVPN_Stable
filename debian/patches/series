@@ -1,0 +1,3 @@
+static-link.patch
+fix-systemd-units.patch
+reproducible-build.patch

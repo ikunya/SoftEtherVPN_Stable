@@ -1,0 +1,63 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: SoftEtherVPN
+Upstream-Contact: Daiyuu Nobori <dnobori.gitcommit@coe.ad.jp>
+Source: https://www.softether.org/
+Files-Excluded:
+ developer_tools
+ resources/icons8.png
+ src/bin
+ src/BuildFiles/Utility
+ src/BuildUtil
+ src/Cedar/winpcap
+ src/Neo
+ src/Neo6
+ src/PenCore
+ src/SeLow
+ src/See
+ src/SeeDll
+ src/vpn16
+ src/Wfp
+ .gitmodules
+
+Files: *
+Copyright:
+ 2014—2020 Daiyuu Nobori
+ 2017—2018 Moataz Elmasry
+ 2017      Zulyandri Zardi
+ 2018—2020 Davide Beatrici
+ 2018—2020 Ilya Shipitsin
+           SoftEther Project at University of Tsukuba
+           SoftEther Corporation
+           and others
+License: Apache-2.0
+
+Files: debian/*
+Copyright:
+ 2018 Dmitry Orlov <me@mosquito.su>
+ 2018, 2020 Dmitry Verkhoturov <paskal.07@gmail.com>
+ 2020 Andrej Shadura <andrewsh@debian.org>
+License: Apache-2.0
+Comment:
+ The Debianisation had no explicit license until January 2020 when MIT
+ was added to the repo; however, most of it has been rewritten from
+ scratch except the init scripts and the control file. It is likely
+ the remaining parts are not copyrightable anyway, so for simplicity
+ all of the Debian metadata is better kept under the same license as
+ the upstream code.
+
+License: Apache-2.0
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+ .
+     http://www.apache.org/licenses/LICENSE-2.0
+ .
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ .
+ On Debian systems, the complete text of the Apache License,
+ version 2.0 can be found in ‘/usr/share/common-licenses/Apache-2.0’.
+

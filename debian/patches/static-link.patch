@@ -1,0 +1,35 @@
+From: Andrej Shadura <andrewsh@debian.org>
+Date: Sat, 15 Aug 2020 17:52:45 +0200
+Subject: Link cedar and mayaqua statically, since they have no public API
+
+---
+ src/Cedar/CMakeLists.txt   | 2 +-
+ src/Mayaqua/CMakeLists.txt | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/Cedar/CMakeLists.txt b/src/Cedar/CMakeLists.txt
+index 92068c0..8848191 100644
+--- a/src/Cedar/CMakeLists.txt
++++ b/src/Cedar/CMakeLists.txt
+@@ -9,7 +9,7 @@ endif()
+ if(WIN32)
+   add_library(cedar STATIC ${SOURCES_CEDAR} ${SOURCES_CEDAR_CPP} ${HEADERS_CEDAR})
+ else()
+-  add_library(cedar SHARED ${SOURCES_CEDAR} ${SOURCES_CEDAR_CPP} ${HEADERS_CEDAR})
++  add_library(cedar STATIC ${SOURCES_CEDAR} ${SOURCES_CEDAR_CPP} ${HEADERS_CEDAR})
+ endif()
+ 
+ set_target_properties(cedar
+diff --git a/src/Mayaqua/CMakeLists.txt b/src/Mayaqua/CMakeLists.txt
+index f4cb1aa..73ddcdb 100644
+--- a/src/Mayaqua/CMakeLists.txt
++++ b/src/Mayaqua/CMakeLists.txt
+@@ -4,7 +4,7 @@ file(GLOB HEADERS_MAYAQUA "*.h")
+ if(WIN32)
+   add_library(mayaqua STATIC ${SOURCES_MAYAQUA} ${HEADERS_MAYAQUA})
+ else()
+-  add_library(mayaqua SHARED ${SOURCES_MAYAQUA} ${HEADERS_MAYAQUA})
++  add_library(mayaqua STATIC ${SOURCES_MAYAQUA} ${HEADERS_MAYAQUA})
+ endif()
+ 
+ target_include_directories(mayaqua PUBLIC .)

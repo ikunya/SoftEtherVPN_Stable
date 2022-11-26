@@ -1,0 +1,26 @@
+From: Chris Lamb <lamby@debian.org>
+Subject: Make the build reproducible
+Date: Mon, 19 Oct 2020 11:47:36 +0100
+
+Last-Update: 2020-10-19
+
+--- a/src/Cedar/CMakeLists.txt
++++ b/src/Cedar/CMakeLists.txt
+@@ -43,17 +43,6 @@ endif()
+ # Version
+ add_definitions(-DCEDAR_VERSION_MAJOR=${PROJECT_VERSION_MAJOR} -DCEDAR_VERSION_MINOR=${PROJECT_VERSION_MINOR} -DCEDAR_VERSION_BUILD=${PROJECT_VERSION_PATCH})
+ 
+-# Builder
+-if(UNIX)
+-  add_definitions(-DBUILDER_NAME="$ENV{USER}")
+-elseif(WIN32)
+-  add_definitions(-DBUILDER_NAME="$ENV{USERNAME}")
+-endif()
+-
+-cmake_host_system_information(RESULT BUILDER_HOSTNAME QUERY HOSTNAME)
+-
+-add_definitions(-DBUILD_PLACE="${BUILDER_HOSTNAME}")
+-
+ # Remove leading 0 from date and time
+ string(REGEX REPLACE "^0([^ ]*)" "\\1" BUILD_DAY "${DATE_DAY}")
+ string(REGEX REPLACE "^0([^ ]*)" "\\1" BUILD_MONTH "${DATE_MONTH}")

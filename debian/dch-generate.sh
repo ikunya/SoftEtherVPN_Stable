@@ -13,7 +13,7 @@
 cbuild="../src/CurrentBuild.txt"
 
 # required for debian packaging
-package="softether-vpn"
+package="softether-vpn-stable"
 status="UNRELEASED"
 # timezone in +hh:mm from UTC (+9 UTC)
 tzone="+09:00"
