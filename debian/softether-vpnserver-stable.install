@@ -1,3 +1,2 @@
 #! /usr/bin/dh-exec
-bin/vpnserver usr/bin/
 usr/vpnserver opt/
