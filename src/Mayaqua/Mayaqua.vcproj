@@ -69,8 +69,9 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				AdditionalOptions="/IGNORE:4006,4221"
 				AdditionalDependencies="libeay32.lib ssleay32.lib zlib.lib libintelaes.lib"
-				AdditionalLibraryDirectories="$(SolutionDir)BuildFiles\Library\$(PlatformName)_$(ConfigurationName)"
+				AdditionalLibraryDirectories="$(SolutionDir)BuildFiles\Library\$(PlatformName)_Release"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -139,8 +140,9 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				AdditionalOptions="/IGNORE:4006,4221"
 				AdditionalDependencies="libeay32.lib ssleay32.lib zlib.lib libintelaes.lib"
-				AdditionalLibraryDirectories="$(SolutionDir)BuildFiles\Library\$(PlatformName)_$(ConfigurationName)"
+				AdditionalLibraryDirectories="$(SolutionDir)BuildFiles\Library\$(PlatformName)_Release"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -212,8 +214,9 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				AdditionalOptions="/IGNORE:4006,4221"
 				AdditionalDependencies="libeay32.lib ssleay32.lib zlib.lib libintelaes.lib"
-				AdditionalLibraryDirectories="$(SolutionDir)BuildFiles\Library\$(PlatformName)_$(ConfigurationName)"
+				AdditionalLibraryDirectories="$(SolutionDir)BuildFiles\Library\$(PlatformName)_Release"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -286,8 +289,9 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				AdditionalOptions="/IGNORE:4006,4221"
 				AdditionalDependencies="libeay32.lib ssleay32.lib zlib.lib libintelaes.lib"
-				AdditionalLibraryDirectories="$(SolutionDir)BuildFiles\Library\$(PlatformName)_$(ConfigurationName)"
+				AdditionalLibraryDirectories="$(SolutionDir)BuildFiles\Library\$(PlatformName)_Release"
 			/>
 			<Tool
 				Name="VCALinkTool"
