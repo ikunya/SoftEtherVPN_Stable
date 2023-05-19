@@ -1,5 +1,5 @@
-softether-vpn-stable (4.38.9760-rtm) jammy; urgency=low
+softether-vpn-stable (4.41.9787-rtm) jammy; urgency=low
 
   * See: http://www.softether.org/5-download/history
 
- -- Ikuya Awashiro <ikuya@fruitsbasket.info>  Sun, 27 Nov 2022 01:49:28 +0900
+ -- John Q. Sample <tamade@example.org>  Tue, 14 Mar 2023 10:40:41 +0900
