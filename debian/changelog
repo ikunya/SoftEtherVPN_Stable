@@ -1,5 +1,5 @@
-softether-vpn-stable (4.42.9798-rtm) jammy; urgency=low
+softether-vpn-stable (4.44.9807-rtm) UNRELEASED; urgency=low
 
   * See: http://www.softether.org/5-download/history
 
- -- Ikuya Awashiro <ikuya@fruitsbasket.info>  Fri, 30 Jun 2023 10:47:04 +0900
+ -- Ikuya Awashiro <ikuya@fruitsbasket.info>  Wed, 16 Apr 2025 04:30:26 +0900
